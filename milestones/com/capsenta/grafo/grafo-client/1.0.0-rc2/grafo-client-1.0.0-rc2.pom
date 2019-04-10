@@ -1,0 +1,182 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.capsenta.grafo</groupId>
+    <artifactId>grafoclient-pom</artifactId>
+    <version>1.0.0-rc2</version>
+  </parent>
+
+  <artifactId>grafo-client</artifactId>
+  <packaging>jar</packaging>
+  <name>grafo-client</name>
+
+  <properties>
+    <jersey.client.version>2.27</jersey.client.version>    
+    <junit.version>4.12</junit.version>
+    <hamcrest.version>1.3</hamcrest.version>
+    <assertj.version>3.12.1</assertj.version>
+    <slf4j.version>1.7.25</slf4j.version>
+    <logback.version>1.2.3</logback.version>
+    <aspectj.version>1.9.2</aspectj.version>
+    <guava.version>27.0-jre</guava.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-client</artifactId>
+        <version>${jersey.client.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.glassfish.jersey.media</groupId>
+        <artifactId>jersey-media-json-jackson</artifactId>
+        <version>${jersey.client.version}</version>
+        <!-- <scope>runtime</scope> -->
+    </dependency>
+    <dependency>
+        <groupId>org.glassfish.jersey.inject</groupId>
+        <artifactId>jersey-hk2</artifactId>
+        <version>${jersey.client.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate.validator</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>6.0.13.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.2</version>
+      <optional>true</optional>
+    </dependency> 
+
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.8.1</version>
+    </dependency>
+
+    <!-- 
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+    -->
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>1.9.2</version>
+    </dependency>
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>1.9.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>3.9.1</version>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
+      <version>${hamcrest.version}</version>
+      <scope>test</scope>
+    </dependency>  
+    -->
+    
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>${logback.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>  
+      <version>${assertj.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20180130</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.skyscreamer</groupId>
+      <artifactId>jsonassert</artifactId>
+      <version>1.5.0</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <profiles> 
+    <profile>
+      <id>windev</id>
+      <activation>
+        <os><family>Windows</family></os>
+      </activation>
+      <properties>
+        <maven.test.skip>true</maven.test.skip>
+      </properties>
+    </profile> 
+    <profile>
+      <id>unixdev</id>
+      <activation>
+        <os><family>unix</family></os>
+      </activation>
+      <properties>
+        <maven.test.skip>true</maven.test.skip>
+      </properties>
+    </profile> 
+  </profiles>
+
+</project>
