@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.capsenta.product</groupId>
+  <artifactId>grafoclient</artifactId>
+  <version>1.0.0-rc2</version>
+  <packaging>pom</packaging>
+
+  <name>Grafo Client Product Family</name>
+  <url>http://www.github.com/grafo-client/mvn-repo</url>
+
+  <organization>
+    <name>Capsenta</name>
+    <url>http://www.capsenta.com</url>
+  </organization>
+  
+  <licenses>
+    <license>
+      <name>Capsenta License, Version 1.0</name>
+      <!-- as of now: this is a uri and not a url :-) -->
+      <url>https://capsenta.com/commercial/LICENSE-1.0.txt</url> 
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>srikanth</id>
+      <name>Srikanth Shenoy</name>
+      <email>srikanth@capsenta.com</email>
+    </developer>
+    <developer>
+      <id>viola</id>
+      <name>Agnetha Viola Rodrigues</name>
+      <email>viola@capsenta.com</email>
+    </developer>
+    <developer>
+      <id>vinuta</id>
+      <name>Vinuta Hiremath</name>
+      <email>vinuta@capsenta.com</email>
+    </developer>
+  </developers>
+
+  <distributionManagement>
+    <!--
+    <repository>
+      <id>release-repo</id>
+      <url>https://github.com/grafo-client/mvn-repo/master/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshot-repo</id>
+      <url>https://github.com/grafo-client/mvn-repo/master/snapshots</url>
+    </snapshotRepository>
+    -->
+    <repository>
+      <id>internal</id>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
+  </distributionManagement>
+
+  <properties>
+    <maven.version.min>3.6.0</maven.version.min>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <javac.debuglevel>lines,source,vars</javac.debuglevel>
+
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
+    <app.build.timestamp>${maven.build.timestamp}</app.build.timestamp>
+    <!--
+    <ultrawrap.effectiveVersion>2.10.1</ultrawrap.effectiveVersion>
+    <ultrawrap.compile.version>[2.5, 5.0)</ultrawrap.compile.version>
+    <ultrawrap.server.version>[2.5, 5.0)</ultrawrap.server.version>
+    <ultrawrap.mapper.version>[2.5, 5.0)</ultrawrap.mapper.version>
+    <ultrawrap.conductor.version>[2.5, 5.0)</ultrawrap.conductor.version>
+    -->
+    <ultrawrap.license.version>1.0.2</ultrawrap.license.version>
+    <ultradist.version>1.0-m2</ultradist.version>
+  </properties>
+  
+  <!--
+  <distributionManagement>
+    <repository>
+      <id>capsenta-portal</id>
+      <url>https://portal.capsenta.com</url>
+    </repository>
+  </distributionManagement>
+  -->
+  
+  <build>
+    <pluginManagement> <!-- lock down plugins versions to avoid using Maven defaults -->
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.0.0-M2</version>
+          <configuration>
+            <rules>
+              <requireJavaVersion>
+                <version>[1.8,)</version>
+                <message>[ERROR] Your Java version seems to be lower than 1.8. Only Java 1.8 or higher is supported</message>
+              </requireJavaVersion>
+              <requireMavenVersion>
+                <version>[3.6.0,)</version>
+                <message>[ERROR] Your Maven version seems to be lower than 3.6.0. UWCompile build needs Maven 3.6.0 or higher. Use mvnw script to run the build instead. For e.g. ./mvnw clean package This will automatically download the appropriate Maven version</message>
+              </requireMavenVersion>
+              <!--
+              <requirePluginVersions>
+                <banLatest>true</banLatest>
+                <banRelease>true</banRelease>
+                <banSnapshots>true</banSnapshots>
+                <phases>clean,deploy,site</phases>
+                <message>[ERROR] Best Practice is to always define plugin versions!</message>
+              </requirePluginVersions>
+              -->
+            </rules>
+          </configuration>
+        </plugin>
+        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <!-- display active profile in compile phase -->
+        <plugin>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+          <configuration>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+            <!--
+            <showDeprecation>true</showDeprecation>
+            <showWarnings>true</showWarnings>
+            <optimize>true</optimize>
+            -->
+            <debug>true</debug>
+            <debuglevel>${javac.debuglevel}</debuglevel>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.8</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.0.0-M1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.0.0-M1</version>
+        </plugin>
+        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>pl.project13.maven</groupId>
+          <artifactId>git-commit-id-plugin</artifactId>
+          <version>2.2.6</version>
+          <configuration>
+            <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+            <prefix>git</prefix>
+            <verbose>false</verbose>
+            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+            <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+            <format>json</format>
+            <gitDescribe>
+              <skip>false</skip>
+              <always>false</always>
+              <dirty>-dirty</dirty>
+            </gitDescribe>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.0.1</version>
+          <configuration>
+            <show>public</show>
+            <excludePackageNames>*.aop,*.converters,*.ops,*.ops.*,*.repository,*.repository.*</excludePackageNames>
+            <!-- <excludePackageNames>com.capsenta.grafo.x.*,com.capsenta.grafo.aop.*,com.capsenta.grafo.converters.*,com.capsenta.grafo.ops.*,com.capsenta.grafo.ops.auth.*,com.capsenta.grafo.ops.ekg.*,com.capsenta.grafo.ops.resource.*,com.capsenta.grafo.repository.*,com.capsenta.grafo.repository.resource.*</excludePackageNames>  -->
+            <!-- <sourceFileExcludes></sourceFileExcludes>  -->
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>com.capsenta.ultradist</groupId>
+          <artifactId>distutils-maven-plugin</artifactId>
+          <version>${ultradist.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>com.capsenta.ultradist</groupId>
+          <artifactId>portal-maven-plugin</artifactId>
+          <version>${ultradist.version}</version>
+        </plugin>
+      </plugins>      
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.0.0-M2</version>
+        <executions>
+          <execution>
+            <id>enforce-java</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <!--
+      <plugin>
+        <groupId>com.capsenta.ultradist</groupId>
+        <artifactId>distutils-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>set-gc-java-version</id>
+            <phase>validate</phase>
+            <goals><goal>latest-version</goal></goals>
+            <configuration>
+              <groupId>com.capsenta</groupId>
+              <artifactId>grafo-client</artifactId>
+              <mavenProperty>java.grafoclient.version</mavenProperty>
+              <includes>
+                <include>RELEASE</include>
+                <include>RC</include>
+              </includes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>set-gc-js-version</id>
+            <phase>validate</phase>
+            <goals><goal>latest-version</goal></goals>
+            <configuration>
+              <groupId>com.capsenta</groupId>
+              <artifactId>grafo-client-js</artifactId>
+              <mavenProperty>js.grafoclient.version</mavenProperty>
+              <includes>
+                <include>RELEASE</include>
+                <include>RC</include>
+              </includes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>calc-effective-version</id>
+            <phase>initialize</phase>
+            <goals><goal>effective-version</goal></goals>
+            <configuration>
+              <moduleVersions>
+                <moduleVersion>${java.grafoclient.version}</moduleVersion>
+                <moduleVersion>${js.grafoclient.version}</moduleVersion>
+              </moduleVersions>
+              <effectiveVersionPropertyName>grafoclient.effectiveVersion</effectiveVersionPropertyName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      -->
+      <!-- 
+      <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>aspectj-maven-plugin</artifactId>
+          <version>1.11</version>
+        <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjrt</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+          <configuration>
+              <complianceLevel>1.8</complianceLevel>
+              <source>1.8</source>
+              <target>1.8</target>
+              <showWeaveInfo>true</showWeaveInfo>
+              <verbose>true</verbose>
+              <Xlint>ignore</Xlint>
+              <encoding>UTF-8 </encoding>
+              <forceAjcCompile>true</forceAjcCompile>
+          </configuration>
+          <executions>
+              <execution>
+                  <goals>
+                      <goal>compile</goal>
+                  </goals>
+              </execution>
+          </executions>
+      </plugin>
+      -->
+    </plugins>
+  </build>
+
+  <modules>
+    <module>java</module>
+    <module>java-examples</module>
+    <!--
+    <module>js</module>
+    <module>js-examples</module>
+    -->
+  </modules>
+
+  <!--
+  <profiles>
+    <profile>
+      <id>tar</id>
+      <modules>
+        <module>tar-composer</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>izpack</id>
+      <modules>
+        <module>izpack-composer</module>
+      </modules>
+    </profile>
+  </profiles>
+  -->
+  
+</project>
